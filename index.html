@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍌 Banana Battle - بازی آنلاین موز</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="game-header">
+            <h1>🍌 Banana Battle</h1>
+            <p>بازی آنلاین موز | با دوستانت رقابت کن!</p>
+        </div>
+
+        <!-- صفحه ورود/ثبت نام -->
+        <div id="authScreen" class="auth-screen">
+            <div class="auth-box">
+                <div class="auth-tabs">
+                    <button class="tab-btn active" onclick="showTab('register')">📝 ثبت نام</button>
+                    <button class="tab-btn" onclick="showTab('login')">🔐 ورود</button>
+                </div>
+                
+                <div id="registerTab" class="tab-content">
+                    <input type="text" id="regName" placeholder="نام کاربری">
+                    <input type="password" id="regPass" placeholder="رمز عبور (حداقل ۴ کاراکتر)">
+                    <input type="password" id="regPassRepeat" placeholder="تکرار رمز">
+                    <button onclick="register()">✅ ثبت نام</button>
+                    <div class="info-text">⚠️ بعد از ثبت نام، شناسه ۱۰ رقمی دریافت می‌کنید</div>
+                </div>
+                
+                <div id="loginTab" class="tab-content hidden">
+                    <input type="text" id="loginId" placeholder="شناسه ۱۰ رقمی">
+                    <input type="password" id="loginPass" placeholder="رمز عبور">
+                    <button onclick="login()">🚪 ورود به بازی</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- صفحه بازی -->
+        <div id="gameScreen" class="game-screen hidden">
+            <div class="game-nav">
+                <div class="user-info">
+                    <span>👤 <span id="userName">---</span></span>
+                    <span>🆔 <span id="userId">---</span></span>
+                    <button onclick="logout()" class="logout-btn">🚪 خروج</button>
+                </div>
+            </div>
+
+            <div class="game-main">
+                <div class="left-panel">
+                    <div class="stats-card">
+                        <h3>📊 آمار من</h3>
+                        <div class="stat-item">🍌 سانت موز: <span id="mySize">0</span></div>
+                        <div class="stat-item">💰 سکه: <span id="myCoins">0</span></div>
+                        <div class="stat-item">⚔️ بردها: <span id="myWins">0</span></div>
+                    </div>
+
+                    <div class="shop-card">
+                        <h3>🛒 فروشگاه</h3>
+                        <div class="shop-items">
+                            <div class="shop-item" onclick="buyItem('water')">
+                                💧 آب جادویی
+                                <span class="price">+۲ سانت | ۵ سکه</span>
+                            </div>
+                            <div class="shop-item" onclick="buyItem('boost')">
+                                ⚡ کود معجزه‌گر
+                                <span class="price">+۵ سانت | ۱۲ سکه</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sabotage-card">
+                        <h3>💣 خرابکاری</h3>
+                        <input type="text" id="targetId" placeholder="شناسه قربانی">
+                        <button onclick="sabotage()" class="danger-btn">💥 اجرا (۱۵ سکه)</button>
+                        <div class="info-text">به مزرعه دیگران آسیب بزن!</div>
+                    </div>
+                </div>
+
+                <div class="right-panel">
+                    <div class="leaderboard-card">
+                        <h3>🏆 رتبه‌بندی</h3>
+                        <div id="leaderboardList" class="leaderboard-list"></div>
+                    </div>
+
+                    <div class="chat-card">
+                        <h3>💬 چت گروهی</h3>
+                        <div id="chatMessages" class="chat-messages"></div>
+                        <div class="chat-input">
+                            <input type="text" id="chatInput" placeholder="پیام به همه...">
+                            <button onclick="sendChat()">📨 ارسال</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="notificationArea" class="notification-area"></div>
+        </div>
+    </div>
+
+    <script src="/client.js"></script>
+</body>
+</html>
